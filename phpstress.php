@@ -32,7 +32,7 @@ Usage:
 
     php phpstress.php www.target.com/wp-content/?r=%r% 
 
-    Socks Proxy:
+    Socks Proxy: * NOT IN ALPHA VERSION
     -s = Y or N / 127.0.0.1:9050 Username:Pw
            Default is N leaving out Username:Pw means there is no Username and Password
            Edit the phpstress.socks file if you want to use a socks proxy
@@ -90,8 +90,8 @@ function userAgentRand(){
 "Mozilla/5.0 (Windows NT 6.2; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1667.0 Safari/537.36",
 "Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre",
 "Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre");
-	
-	
+
+
   // Lets shuffle our array 
   shuffle($userArray);
   // count how many user agents in array
@@ -343,6 +343,7 @@ function inputCommand($commands){
         $outputCommand[$new_number] = $value; // Append data to Array	
         break;
 
+
       // target
       case "-t":			
         $outputCommand[] = "-t";
@@ -402,7 +403,7 @@ function inputCommand($commands){
          
  		
     }
-									
+
   }
 
   // return array with results
@@ -499,41 +500,54 @@ if (isset($argv[1])) {
   $dbr = 0.02;
   $dbc = 0.7;
 
+
+
+
   // lets assign all variables now and get ready for attack
-  foreach($results as $com){
+  foreach($results as $key=>$com){
 
     // Socks proxy default N
     if ($com == "-s"){
-     $num = $d++;    
-     $socks = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $socks = $results[$r];
     }
     // Maximum requests Default is 100000000
     if ($com == "-m"){
-     $num = $d++;    
-     $mr = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $mr = $results[$r];
     }
     // Check is server keep alive? default is Y
     if ($com == "-k"){
-     $num = $d++;    
-     $k = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $k = $results[$r];
     }
     // Max request per connection
     if ($com == "-c"){
-     $num = $d++;    
-     $mpr = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $mpr = $results[$r];
     }
     // delay between connections
     if ($com == "-d"){
-     $num = $d++;    
-     $dbc = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $dbc = $results[$r];
     }
     // delay between requests
     if ($com == "-r"){
-     $num = $d++;    
-     $dbr = $results[$d];
+      $r = $key;
+      if ($r == 0){ $r++;$r++; }else{
+      $r++;}
+      $dbr = $results[$r];
     }
-  // Add increment now for looping
-  $d++;
   }
 
 
@@ -547,17 +561,18 @@ if (isset($argv[1])) {
     exit(0);
   }
 
-  // keep alive 
-  if (strtolower($k) == "n" or strtolower($k) == "y"){}else{
-    // error socks is either a n or y question 
-    echo "   [!]  ERROR: Keep Alive is either a [y]es or [n]o question\n";
-    exit(0);
-  }
 
   // Socks check now  
   if ((strtolower($socks) == "n") || (strtolower($socks) == "y")){}else{
     // error socks is either a n or y question 
     echo "   [!]  ERROR: Socks is either a [y]es or [n]o question\n\n";
+    exit(0);
+  }
+
+  // keep alive 
+  if (strtolower($k) != "n" || strtolower($k) != "y"){}else{
+    // error socks is either a n or y question 
+    echo "   [!]  ERROR: Keep Alive is either a [y]es or [n]o question\n";
     exit(0);
   }
 
